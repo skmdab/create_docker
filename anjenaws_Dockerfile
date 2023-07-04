@@ -2,7 +2,7 @@ FROM alpine
 
 ARG SECRET
 
-RUN apk update && apk add openssh python3 openjdk11 ansible py3-pip groff \
+RUN apk update && apk add openssh python3 openjdk11 ansible git py3-pip groff \
     && pip3 install awscli && apk add --no-cache wget ttf-dejavu \
     && wget https://get.jenkins.io/war-stable/latest/jenkins.war -O /jenkins.war
 

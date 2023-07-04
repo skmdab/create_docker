@@ -1,5 +1,39 @@
 #!/bin/sh
 
+progress_bar() {
+  duration="$1"
+  bar_length=40
+  sleep_duration=$(echo "$duration / $bar_length" | bc)
+
+  i=0
+  while [ "$i" -le "$bar_length" ]; do
+    printf "\r["
+
+    j=0
+    while [ "$j" -lt "$i" ]; do
+      printf "="
+      j=$((j+1))
+    done
+
+    printf ">"
+
+    j=$((i+1))
+    while [ "$j" -lt "$bar_length" ]; do
+      printf " "
+      j=$((j+1))
+    done
+
+    printf "] %d%%" "$((i*100/bar_length))"
+
+    sleep "$sleep_duration"
+    i=$((i+1))
+  done
+
+  printf "\n"
+}
+
+echo "Creating Docker server"
+
 INSTANCENAME=Docker
 
 INSTANCETYPE=t2.micro
@@ -12,10 +46,7 @@ COUNTS=1
 
 INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --count $COUNTS --instance-type $INSTANCETYPE --key-name filinta --security-group-ids sg-08a5b7d4856dedfe6 --subnet-id $ZONE --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCENAME'}]' --query 'Instances[0].InstanceId'  --output text)
 
-sleep 30
+progress_bar 40
 
-echo "Instance Created Successfully"
+echo "Docker Server Created Successfully!"
 
-PUBLICIP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[].Instances[].PublicIpAddress' | cut -d "[" -f2 | cut -d "]" -f1 | tr -d '" ')
-
-echo "$PUBLICIP ansible_user=ubuntu ansible_ssh_private_key_file=/home/ansible/filinta.pem" >> /etc/ansible/hosts

@@ -52,4 +52,6 @@ echo "Docker Server Created Successfully!"
 
 PUBLICIP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[].Instances[].PublicIpAddress' | cut -d "[" -f2 | cut -d "]" -f1 | tr -d '" ')
 
-echo "$PUBLICIP ansible_user=ubuntu ansible_ssh_private_key_file=/home/ansible/filinta.pem" >> /etc/ansible/hosts
+LINE="[docker]\n\n$PUBLICIP ansible_user=ubuntu ansible_ssh_private_key_file=/home/ansible/filinta.pem"
+
+echo -e "$LINE" > /etc/ansible/hosts

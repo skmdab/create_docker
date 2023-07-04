@@ -1,0 +1,27 @@
+FROM alpine
+
+ARG SECRET
+
+RUN apk update && apk add openssh python3 openjdk11 ansible \
+    && apk add --no-cache wget ttf-dejavu \
+    && wget https://get.jenkins.io/war-stable/latest/jenkins.war -O /jenkins.war
+
+RUN adduser ansible -D \
+    && echo 'ansible:${SECRET}' | chpasswd \
+    && echo 'ansible ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config \
+    && sed -i 's/#   StrictHostKeyChecking ask/    StrictHostKeyChecking no/g' /etc/ssh/ssh_config 
+    
+RUN mkdir /etc/ansible/ \
+    && touch /etc/ansible/hosts \
+    && echo "10.0.0.158 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ansible/filinta.pem" > /etc/ansible/hosts
+
+COPY filinta.pem /home/ansible/filinta.pem
+
+RUN chmod 700 /home/ansible/filinta.pem \
+    && chown -R ansible /home/ansible/filinta.pem
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "/jenkins.war"]

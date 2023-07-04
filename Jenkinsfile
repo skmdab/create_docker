@@ -5,7 +5,7 @@ pipeline{
     stages{
         stage('Checkout the code'){
             steps{
-                git branch: 'main', credentialsId: 'f1458e0b-2e10-40f0-aa9b-6070a8514a7c', url: 'https://github.com/skmdab/create_docker_server.git'
+                git branch: 'main', credentialsId: 'git_token', url: 'https://github.com/skmdab/create_docker_server.git'
             }
         }
 

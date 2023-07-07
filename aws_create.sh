@@ -56,7 +56,7 @@ PCLINE="[$INSTANCENAME]\n\n$PUBLICIP ansible_user=ec2-user ansible_ssh_private_k
 
 PHLINE="[$INSTANCENAME]\n\n$PUBLICIP ansible_user=ec2-user ansible_ssh_private_key_file=filinta.pem"
 
-PATH="/var/lib/jenkins/workspace/docker"
+PATH="/root/.jenkins/workspace/$INSTANCENAME"
 
 if [ "$(echo "$PWD")" = "$PATH" ]; then
   echo "$PCLINE" > /etc/ansible/hosts

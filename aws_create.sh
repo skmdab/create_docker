@@ -2,7 +2,7 @@
 
 progress_bar() {
   duration="$1"
-  bar_length=40
+  bar_length=60
   sleep_duration=$(echo "$duration / $bar_length" | bc)
 
   i=0
@@ -46,20 +46,21 @@ COUNTS=1
 
 INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --count $COUNTS --instance-type $INSTANCETYPE --key-name filinta --security-group-ids sg-08a5b7d4856dedfe6 --subnet-id $ZONE --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCENAME'}]' --query 'Instances[0].InstanceId'  --output text)
 
-progress_bar 40
+progress_bar 60
 
 echo "Docker Server Created Successfully!"
 
 PUBLICIP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[].Instances[].PublicIpAddress' | cut -d "[" -f2 | cut -d "]" -f1 | tr -d '" ')
 
-PCLINE="[$INSTANCENAME]\n\n$PUBLICIP ansible_user=ec2-user ansible_ssh_private_key_file=/home/ansible/filinta.pem"
+PCLINE="[$INSTANCENAME]
+$PUBLICIP ansible_user=ec2-user ansible_ssh_private_key_file=/home/ansible/filinta.pem"
 
 PHLINE="[$INSTANCENAME]\n\n$PUBLICIP ansible_user=ec2-user ansible_ssh_private_key_file=filinta.pem"
 
 PATH="/root/.jenkins/workspace/$INSTANCENAME"
 
 if [ "$(echo "$PWD")" = "$PATH" ]; then
-  echo "$PCLINE" > /etc/ansible/hosts
+  echo "$PCLINE" > hosts
 else
   echo "$PHLINE" > hosts
 fi

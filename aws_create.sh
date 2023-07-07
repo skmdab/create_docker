@@ -2,7 +2,7 @@
 
 progress_bar() {
   duration="$1"
-  bar_length=60
+  bar_length=75
   sleep_duration=$(echo "$duration / $bar_length" | bc)
 
   i=0
@@ -46,7 +46,7 @@ COUNTS=1
 
 INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --count $COUNTS --instance-type $INSTANCETYPE --key-name filinta --security-group-ids sg-08a5b7d4856dedfe6 --subnet-id $ZONE --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCENAME'}]' --query 'Instances[0].InstanceId'  --output text)
 
-progress_bar 60
+progress_bar 75
 
 echo "Docker Server Created Successfully!"
 

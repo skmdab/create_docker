@@ -33,7 +33,7 @@ progress_bar() {
 }
 
 
-INSTANCENAME=Docker
+INSTANCENAME=docker
 
 echo "Creating $INSTANCENAME server"
 

@@ -26,6 +26,9 @@ To-do's in Jenkins:
 ------------------------------------------
 1. Add the AWS PEM file in Jenkins credentials with the ID "pemfile".
 
+## NOTE: Jenkins Job name and AWS EC2 Instance name must be same.
+Instance Name will be in aws_create.sh
+
 Please ensure you have completed the above steps before proceeding.
 
 ## Contributing

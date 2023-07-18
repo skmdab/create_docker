@@ -51,14 +51,13 @@ progress_bar 75
 
 echo "$INSTANCENAME Server Created Successfully!"
 
-chmod 700 filinta.pem
 
 PUBLICIP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[].Instances[].PublicIpAddress' | cut -d "[" -f2 | cut -d "]" -f1 | tr -d '" ')
 
 PCLINE="[$INSTANCENAME]
-$PUBLICIP ansible_user=ubuntu ansible_ssh_private_key_file=filinta.pem"
+$PUBLICIP ansible_user=ubuntu"
 
-PHLINE="[$INSTANCENAME]\n\n$PUBLICIP ansible_user=ubuntu ansible_ssh_private_key_file=filinta.pem"
+PHLINE="[$INSTANCENAME]\n\n$PUBLICIP ansible_user=ubuntu"
 
 PATH="/root/.jenkins/workspace/$INSTANCENAME"
 

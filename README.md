@@ -8,10 +8,9 @@ Before you can use these scripts, ensure that you have the following:
 
 - Linux or macOS environment
 - AWS CLI installed and configured with credentials
-- Docker and Jenkins installed and running
+- Jenkins installed and running
 - Git installed
 - Ansible installed and running
-- Internet connectivity to download Jenkins Docker image
 - The Jenkins user must be part of the Docker group
 
 Please make the following modifications in the `aws_create` script according to your environment:

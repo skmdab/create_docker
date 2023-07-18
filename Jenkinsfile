@@ -17,7 +17,10 @@ pipeline{
 
         stage('Installing docker package into server'){
             steps{
-                sh "ansible-playbook installdocker.yaml"
+                withCredentials([file(credentialsId: 'pemfile', variable: 'PEMFILE')]) {
+                    sh "ansible-playbook installdocker.yaml" --private-key=${PEMFILE}
+                }
+                
             }
         }
     }

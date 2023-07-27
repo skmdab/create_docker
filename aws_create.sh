@@ -41,11 +41,11 @@ INSTANCETYPE=t2.medium
 
 AMI_ID=ami-0f5ee92e2d63afc18
 
-ZONE=subnet-0f7ec0ece3a873bb1
+ZONE=subnet-04af86a9c1fe173cf
 
 COUNTS=1
 
-INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --count $COUNTS --instance-type $INSTANCETYPE --key-name filinta --security-group-ids sg-08a5b7d4856dedfe6 --subnet-id $ZONE --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCENAME'}]' --query 'Instances[0].InstanceId'  --output text)
+INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --count $COUNTS --instance-type $INSTANCETYPE --key-name filinta --security-group-ids sg-0f0a57a6dfe41db26 --subnet-id $ZONE --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCENAME'}]' --query 'Instances[0].InstanceId'  --output text)
 
 progress_bar 75
 

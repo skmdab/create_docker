@@ -37,15 +37,15 @@ INSTANCENAME=docker
 
 echo "Creating $INSTANCENAME server"
 
-INSTANCETYPE=t2.medium
+INSTANCETYPE=t3.medium
 
-AMI_ID=ami-0f5ee92e2d63afc18
+AMI_ID=ami-04a5a6be1fa530f1c
 
-ZONE=subnet-04af86a9c1fe173cf
+ZONE=subnet-0a3721f48b6b71c75
 
 COUNTS=1
 
-INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --count $COUNTS --instance-type $INSTANCETYPE --key-name filinta --security-group-ids sg-0f0a57a6dfe41db26 --subnet-id $ZONE --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCENAME'}]' --query 'Instances[0].InstanceId'  --output text)
+INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --count $COUNTS --instance-type $INSTANCETYPE --key-name filinta --security-group-ids sg-0e8a1d885359e7e03 --subnet-id $ZONE --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value='$INSTANCENAME'}]' --query 'Instances[0].InstanceId'  --output text)
 
 progress_bar 75
 
